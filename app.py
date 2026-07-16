@@ -6,7 +6,7 @@ import joblib
 # Page Configuration
 # ===============================
 st.set_page_config(
-    page_title="AI Job Layoff Risk Predictor",
+    page_title="AI Job Layoff Risk Predictor System",
     page_icon="🧭",
     layout="centered"
 )
@@ -14,7 +14,7 @@ st.set_page_config(
 # ===============================
 # Load Model
 # ===============================
-model = joblib.load("layoff_Risk model.pkl")
+model = joblib.load("AI_Impact_on_Jobs_Prediction_System.pkl")
 
 # ===============================
 # Small readability fixes (captions + card borders) + forced brand color
