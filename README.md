@@ -1,77 +1,118 @@
-# 🧭 AI Job Layoff Risk Predictor
+# AI Job Layoff Risk Predictor System
 
-A machine learning web app that predicts whether a job role is at **Low**, **Medium**, or **High** risk of being affected by AI and automation — based on role details, industry, and how much AI is already used in that job.
+A machine learning web application that predicts whether a job role is at Low, Medium, or High risk of being affected by AI and automation based on employee, industry, and AI adoption-related factors.
 
-Built with **Streamlit** and a **Random Forest Classifier**.
-
----
+Built with Streamlit and a LightGBM Classifier.
 
 ## 🚀 Features
 
-- Simple, guided form to enter role details (age, education, experience, industry, job role, etc.)
-- AI exposure inputs — routine task %, automation %, AI adoption level, AI tools used, and more
-- Instant prediction with a clear Low / Medium / High risk result
-- Clean, responsive UI built entirely with Streamlit — no extra frontend code needed
+* Simple and user-friendly interface for entering job and employee details.
+* Predicts AI-driven layoff risk as Low, Medium, or High.
+* Supports inputs such as:
 
----
+  * Age
+  * Education Level
+  * Years of Experience
+  * Industry
+  * Company Size
+  * Job Level
+  * Routine Task Percentage
+  * Creativity Requirement
+  * Human Interaction Level
+  * AI Adoption Level
+  * Number of AI Tools Used
+  * AI Usage Hours per Week
+  * Tasks Automated Percentage
+  * AI Training Hours
+* Instant predictions powered by a trained LightGBM model.
+* Clean and responsive UI built entirely with Streamlit.
 
 ## 🛠️ Tech Stack
 
-- **Python**
-- **Streamlit** — web app framework
-- **scikit-learn** — Random Forest model
-- **pandas** — data handling
-- **joblib** — model loading
+* Python
+* Streamlit – Web application framework
+* LightGBM – Machine Learning Classification Model
+* scikit-learn – Data preprocessing and model evaluation
+* pandas – Data handling and preprocessing
+* joblib – Model serialization and loading
 
----
+## 📊 Model Performance
+
+* Model: LightGBM Classifier
+* Accuracy: 93.92%
+* Multi-Class Classification:
+
+  * Low Layoff Risk
+  * Medium Layoff Risk
+  * High Layoff Risk
+* Evaluated using:
+
+  * Accuracy Score
+  * Precision
+  * Recall
+  * F1-Score
+  * Confusion Matrix
 
 ## 📦 Project Structure
 
 ```
 AI-job-layoff-risk-predictor-System/
-├── app.py                     # Main Streamlit app
-├── layoff_Risk model.pkl      # Trained Random Forest model
+├── app.py                           # Main Streamlit application
+├── ai_layoff_risk_model.pkl         # Trained LightGBM model
 ├── .streamlit/
-│   └── config.toml            # App theme (colors, fonts)
-├── requirements.txt           # Python dependencies
+│   └── config.toml                  # Streamlit theme configuration
+├── requirements.txt                 # Project dependencies
 └── README.md
 ```
 
----
-
 ## ⚙️ Installation & Setup
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/iqrabb/AI-job-layoff-risk-predictor-System.git
-   cd AI-job-layoff-risk-predictor-System
-   ```
+### Clone the Repository
 
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+git clone https://github.com/iqrabb/AI-job-layoff-risk-predictor-System.git
+cd AI-job-layoff-risk-predictor-System
+```
 
-3. **Run the app**
-   ```bash
-   streamlit run app.py
-   ```
+### Install Dependencies
 
-4. Open the local URL shown in your terminal (usually `http://localhost:8501`).
+```bash
+pip install -r requirements.txt
+```
 
----
+### Run the Application
+
+```bash
+streamlit run app.py
+```
+
+Open the local URL shown in your terminal (usually http://localhost:8501).
 
 ## 📋 How It Works
 
-1. Enter details about the role — age, education level, experience, company size, industry, and job title.
-2. Enter how exposed the role already is to AI — routine task percentage, automation level, number of AI tools used, and more.
-3. Click **Predict Layoff Risk** to get an instant Low / Medium / High risk result.
+1. Enter job and employee-related information.
+2. Provide AI adoption and automation-related details.
+3. Click the **Predict Layoff Risk** button.
+4. The model analyzes the inputs and predicts whether the role is at:
 
----
+   * Low Risk
+   * Medium Risk
+   * High Risk
+5. Receive an instant AI-driven layoff risk prediction.
+
+## 🎯 Use Cases
+
+* Workforce risk assessment.
+* AI adoption impact analysis.
+* Educational and portfolio projects.
+* Demonstrating machine learning deployment using Streamlit and LightGBM.
+* Exploring the future impact of AI on jobs and industries.
 
 ## 🙋 Author
 
-**Iqra  ❤️**
-AI & Machine Learning Learner
+**Iqra BiBi**
+AI & Machine Learning Learner | Data Science Student | Building Real-World ML Projects
 
----
+## About
+
+AI Job Layoff Risk Predictor is a machine learning web application that predicts the likelihood of job roles being affected by AI and automation using a LightGBM Classifier. The model has been trained on a dataset of 20,000 records and optimized for high predictive performance and deployment efficiency.
