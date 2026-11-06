@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+from pathlib import Path
 
 # ===============================
 # Page Configuration
@@ -14,7 +15,18 @@ st.set_page_config(
 # ===============================
 # Load Model
 # ===============================
-model = joblib.load("AI_Impact_on_Jobs_Prediction_System.pkl")
+BASE_DIR = Path(__file__).resolve().parent
+MODEL_PATH = BASE_DIR / "AI_Impact_on_Jobs_Prediction_System.pkl"
+
+try:
+    model = joblib.load(MODEL_PATH)
+except FileNotFoundError:
+    st.error(f"Model file not found: {MODEL_PATH.name}. Place it beside app.py.")
+    st.stop()
+except Exception as exc:
+    st.error("The model file could not be loaded. Check that it is a valid, compatible model artifact.")
+    st.caption(f"Technical detail: {exc}")
+    st.stop()
 
 # ===============================
 # Small readability fixes (captions + card borders) + forced brand color
@@ -189,6 +201,10 @@ if st.button("🔍 Predict Layoff Risk", use_container_width=True, type="primary
         input_data[f"Job_Role_{job_role}"] = 1
 
     input_df = pd.DataFrame([input_data])
+    # Match the feature order recorded by the estimator during training, when available.
+    trained_features = getattr(model, "feature_names_in_", None)
+    if trained_features is not None:
+        input_df = input_df.reindex(columns=list(trained_features), fill_value=0)
     prediction = model.predict(input_df)[0]
 
     result_section = st.container(border=True)
