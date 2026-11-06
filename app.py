@@ -28,6 +28,16 @@ except Exception as exc:
     st.caption(f"Technical detail: {exc}")
     st.stop()
 
+def normalize_risk_label(prediction):
+    """Translate known model class labels without guessing unknown classes."""
+    value = prediction.item() if hasattr(prediction, "item") else prediction
+    if isinstance(value, str):
+        labels = {"low": "Low Risk", "medium": "Medium Risk", "high": "High Risk"}
+        return labels.get(value.strip().casefold())
+    if value in (0, 1, 2):
+        return {0: "Low Risk", 1: "Medium Risk", 2: "High Risk"}[value]
+    return None
+
 # ===============================
 # Small readability fixes (captions + card borders) + forced brand color
 # ===============================
@@ -216,12 +226,15 @@ if st.button("🔍 Predict Layoff Risk", use_container_width=True, type="primary
         </div>
         """, unsafe_allow_html=True)
 
-        if prediction == 0:
-            st.success("🟢 **Low Risk** — This role is fairly safe for now. Keep learning new tools as they come up.")
-        elif prediction == 1:
-            st.warning("🟡 **Medium Risk** — Some tasks in this role could get automated. A bit of upskilling will help.")
+        risk_label = normalize_risk_label(prediction)
+        if risk_label == "Low Risk":
+            st.success("🟢 **Low Risk** — This is the model's category for the supplied inputs, not a job-security guarantee.")
+        elif risk_label == "Medium Risk":
+            st.warning("🟡 **Medium Risk** — This is the model's category for the supplied inputs, not a forecast of an actual layoff.")
+        elif risk_label == "High Risk":
+            st.error("🔴 **High Risk** — This is the model's category for the supplied inputs, not a forecast of an actual layoff.")
         else:
-            st.error("🔴 **High Risk** — Most tasks in this role overlap with what AI can already do. Building AI-related skills is worth prioritizing.")
+            st.error(f"The model returned an unsupported class label: {prediction!r}. Check the training label mapping.")
 
 # ===============================
 # Footer
