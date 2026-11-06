@@ -1,118 +1,109 @@
-# AI Job Layoff Risk Predictor System
+# AI Job Impact & Layoff Risk Predictor
 
-A machine learning web application that predicts whether a job role is at Low, Medium, or High risk of being affected by AI and automation based on employee, industry, and AI adoption-related factors.
+A Streamlit portfolio application that explores how job characteristics and reported AI/automation exposure relate to a model-generated Low, Medium, or High risk category.
 
-Built with Streamlit and a LightGBM Classifier.
+The app collects role, company, experience, task, and AI-adoption inputs, then passes the encoded features to a saved machine-learning estimator.
 
-## 🚀 Features
+> **Important:** This is an experimental educational project. Its output is not a forecast of actual layoffs, a reliable assessment of an individual's job security, or a basis for employment decisions.
 
-* Simple and user-friendly interface for entering job and employee details.
-* Predicts AI-driven layoff risk as Low, Medium, or High.
-* Supports inputs such as:
+## Features
 
-  * Age
-  * Education Level
-  * Years of Experience
-  * Industry
-  * Company Size
-  * Job Level
-  * Routine Task Percentage
-  * Creativity Requirement
-  * Human Interaction Level
-  * AI Adoption Level
-  * Number of AI Tools Used
-  * AI Usage Hours per Week
-  * Tasks Automated Percentage
-  * AI Training Hours
-* Instant predictions powered by a trained LightGBM model.
-* Clean and responsive UI built entirely with Streamlit.
+- Streamlit interface for entering role and workplace characteristics.
+- Inputs for education, experience, job level, company size, industry, and job role.
+- Inputs for routine tasks, creativity, human interaction, AI adoption, AI-tool usage, automation, and AI training.
+- Encodes categorical inputs and sends the resulting feature row to the saved model.
+- Displays one of three model output categories: Low, Medium, or High.
 
-## 🛠️ Tech Stack
+## Technology
 
-* Python
-* Streamlit – Web application framework
-* LightGBM – Machine Learning Classification Model
-* scikit-learn – Data preprocessing and model evaluation
-* pandas – Data handling and preprocessing
-* joblib – Model serialization and loading
+- Python
+- Streamlit
+- Pandas
+- Joblib for loading the saved estimator
+- scikit-learn, LightGBM, and NumPy are listed in the project dependencies
 
-## 📊 Model Performance
+The app code loads a serialized estimator from `AI_Impact_on_Jobs_Prediction_System.pkl`. The exact estimator class and its training configuration are not established by the application code alone, so this README does not make an unverified algorithm claim.
 
-* Model: LightGBM Classifier
-* Accuracy: 93.92%
-* Multi-Class Classification:
+## How it works
 
-  * Low Layoff Risk
-  * Medium Layoff Risk
-  * High Layoff Risk
-* Evaluated using:
+1. The user enters role and AI-exposure details in the Streamlit interface.
+2. Education and job-level values are mapped to numeric categories.
+3. Industry and job-role values are converted into one-hot-style feature columns.
+4. The app creates a single-row Pandas DataFrame.
+5. The saved estimator predicts a class.
+6. The app maps class `0` to Low Risk, `1` to Medium Risk, and other outputs to High Risk.
 
-  * Accuracy Score
-  * Precision
-  * Recall
-  * F1-Score
-  * Confusion Matrix
+## Run locally
 
-## 📦 Project Structure
-
-```
-AI-job-layoff-risk-predictor-System/
-├── app.py                           # Main Streamlit application
-├── ai_layoff_risk_model.pkl         # Trained LightGBM model
-├── .streamlit/
-│   └── config.toml                  # Streamlit theme configuration
-├── requirements.txt                 # Project dependencies
-└── README.md
-```
-
-## ⚙️ Installation & Setup
-
-### Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/iqrabb/AI-job-layoff-risk-predictor-System.git
 cd AI-job-layoff-risk-predictor-System
 ```
 
-### Install Dependencies
+### 2. Create and activate a virtual environment
+
+**Windows (PowerShell):**
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+**macOS / Linux:**
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### Run the Application
+### 4. Start the application
 
 ```bash
 streamlit run app.py
 ```
 
-Open the local URL shown in your terminal (usually http://localhost:8501).
+Open the local URL printed by Streamlit (usually http://localhost:8501).
 
-## 📋 How It Works
+The app expects `AI_Impact_on_Jobs_Prediction_System.pkl` in the repository root. Do not load pickle/joblib artifacts from untrusted sources; deserialization can execute arbitrary code.
 
-1. Enter job and employee-related information.
-2. Provide AI adoption and automation-related details.
-3. Click the **Predict Layoff Risk** button.
-4. The model analyzes the inputs and predicts whether the role is at:
+## Input categories
 
-   * Low Risk
-   * Medium Risk
-   * High Risk
-5. Receive an instant AI-driven layoff risk prediction.
+| Area | Inputs |
+|---|---|
+| Role profile | Age, education, years of experience, job level, company size |
+| Work context | Industry, job role |
+| Task characteristics | Routine task percentage, creativity requirement, human interaction level |
+| AI exposure | AI adoption level, number of AI tools, AI usage hours, tasks automated percentage, AI training hours |
 
-## 🎯 Use Cases
+## Repository contents
 
-* Workforce risk assessment.
-* AI adoption impact analysis.
-* Educational and portfolio projects.
-* Demonstrating machine learning deployment using Streamlit and LightGBM.
-* Exploring the future impact of AI on jobs and industries.
+- `app.py` — Streamlit interface, feature encoding, and prediction logic.
+- `AI_Impact_on_Jobs_Prediction_System.pkl` — serialized estimator loaded by the app.
+- `requirements.txt` — Python dependencies.
+- `README.md` — project documentation.
 
-## 🙋 Author
+## Evaluation and reproducibility
 
-**Iqra BiBi**
-AI & Machine Learning Learner | Data Science Student | Building Real-World ML Projects
+The repository currently does not include the training dataset or a training/evaluation script. The accuracy figure and training-data-size claims from the previous README have therefore been removed because they cannot be independently verified from the committed files.
 
-## About
+To make this project reproducible, add the dataset source and license, a training pipeline, the exact feature schema, a documented split strategy, and held-out evaluation results (including per-class precision, recall, F1-score, and a confusion matrix).
 
-AI Job Layoff Risk Predictor is a machine learning web application that predicts the likelihood of job roles being affected by AI and automation using a LightGBM Classifier. The model has been trained on a dataset of 20,000 records and optimized for high predictive performance and deployment efficiency.
+## Limitations and responsible interpretation
+
+- The model output reflects patterns learned from its training data; it does not establish that a particular job will or will not be eliminated.
+- AI adoption, task automation, and employment outcomes vary by organization, region, time, and many factors not represented by this interface.
+- The repository does not provide evidence of calibration, external validation, or real-world predictive performance.
+- Do not use this application for hiring, firing, promotion, compensation, or other consequential employment decisions.
+
+---
+
+Developed as an educational demonstration of tabular feature engineering and machine-learning inference with Streamlit.
